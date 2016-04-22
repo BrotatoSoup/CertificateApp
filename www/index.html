@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta id="appViewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=0" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <!-- JQM -->
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.external-png-1.4.5.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons-1.4.5.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.inline-png-1.4.5.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.inline-svg-1.4.5.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme-1.4.5.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.css" />
+        <link rel="stylesheet" type="text/css" href="css/themes/CertificateAppTheme.min.css" /> <!--Theme Roller-->
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.structure-1.4.5.css" />
+        <!--owl carousel -->
+       <link rel="stylesheet" type="text/css" href="owl-carousel/owl.carousel.css">
+       <link rel="stylesheet" type="text/css" href="owl-carousel/owl.theme.css"> 
+       
+        <title>Certificate - Index</title>
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
+        <script type="text/javascript" src="js/localforage.js"></script>
+        <script type="text/javascript" src="owl-carousel/owl.carousel.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        
+        
+        <script type="text/javascript"> 
+            /*
+			var viewportScale = 1 / window.devicePixelRatio;
+            document.getElementById("appViewport").setAttribute("content", "user-scalable=no, initial-scale="+viewportScale+", minimum-scale=0.2, maximum-scale=2, width=device-width");
+			*/
+			var panel = '<div data-theme="a" data-role="panel" id="mypanel" data-position="right" data-display="reveal"><div data-role="header"><h3>Settings</h3></div><ul data-role="listview" data-inset="true"><li id="goToAboutPage"><a href="#aboutPage">About</a></li><li id="goToSetupPage"><a href="#setup">Setup Account</a></li><li id="setPasswordStatus"><a href="#passwordStatus">Password Status</a></li></ul></div>';
+
+			$(document).one('pagebeforecreate', function () {
+			    $.mobile.pageContainer.prepend(panel);
+			    $("#mypanel").panel().enhanceWithin();
+			});
+			
+        </script>
+        
+    </head>
+    <body>
+        <div id="wrapperOfApp">
+        	<!--first screen used to login-->
+        	<div data-role="page" align="center" id="loginPage"> 
+                    
+                    
+        		<div data-role="header" class="pageHeader"><a href="" data-icon="home" onclick="homeIconClicked()" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-home ui-corner-all "></a><a href="#mypanel" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-gear ui-corner-all"></a>
+        			<table>
+  				<tr>
+  					<td class="certTable">
+  						<h1>Certi-Buddy</h1>
+  					</td>
+  				</tr>
+  			</table>
+        		</div>
+        		<div data-role="content" class="pageBody">
+        			<form>
+						<input id="userPassword" type="password" placeholder="Enter password" value="" />
+					</form>
+					<script>
+                                           
+					</script>
+					<a data-role="button" data-inline="true" onclick="goToCertificate();">Login</a>
+					<a href="#forgotPassword" data-role="button" data-inline="true">Forgot Password?</a>
+					<a href="#pwPopupStatus" data-rel="popup" data-inline="true">Password Status</a>
+					
+					<div data-role="popup" id="pwPopupStatus">
+						<p id="popupMessage"><p>
+						<script>
+							//pw not set
+							var pwStatusVar = localStorage.getItem("pwStatus"); //variable to get the value of pwStatus
+							if(pwStatusVar == null){
+								//alert("Password is not set");
+								document.getElementById("popupMessage").innerHTML = "Password status is not set";
+							}
+							//pw is enabled
+							else if(pwStatusVar == "enabled"){
+								//alert("Password is " + localStorage.getItem("pwStatus"));
+								document.getElementById("popupMessage").innerHTML = "Password status is enabled";
+							}
+							//pw is disabled; user can just login
+							else{
+								//alert("Password is " + localStorage.getItem("pwStatus"));
+								document.getElementById("popupMessage").innerHTML = "Password status is disabled";
+							}	
+						</script>
+					</div>
+					
+					<br /><br />
+					<br /><a data-role="button" data-inline="true" onclick="clearLS();">Clear Local Storage</a>
+
+        		</div>
+        	</div>
+       		
+        
+        <!--setup-->
+        <div data-role="page" align="center" id="setup">
+        	
+            <div data-role="header" class="pageHeader"><a href="" data-icon="home" onclick="homeIconClicked();" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-home ui-corner-all "></a><a href="#mypanel" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-gear ui-corner-all"></a>
+    		<table>
+  				<tr>
+  					<td class="certTable">
+  						<h1>Setup</h1>
+  					</td>
+  				</tr>
+  			</table>
+            </div>
+            <div data-role="content">
+                <label>Create Password</label>
+                <input id="password1" type="password" placeholder="Enter password" value="" />
+                <input id="password2" type="password" placeholder="Reenter password" value="" />
+                <input id="oldPassword" type="password" placeholder="Enter old password" value="" style="display: none" /><br><br>
+                
+                <label>Create Security Q&A</label>
+                <input type="text" id="secQChoice" placeholder="Enter Question" value="" />
+		<input id="userAnswer1" type="password" placeholder="Enter Answer" value="" />
+                <input id="userAnswer2" type="password" placeholder="Reenter Answer" value="" />
+                
+                <a data-role="button" data-inline="true" onclick="setSetup();">Submit</a>
+                <a href="#confirmPassword" data-role="button" data-inline="true">Delete Setup</a>
+                
+                <script>
+                    //hidden old PW field (used to make a new PW)
+                    //determine placeholders and determine if oldPassword field should show
+                    var hasPW = false;
+                    if(localStorage.getItem('password') != null){
+                        document.getElementById('password1').placeholder = "Enter new password";
+                        document.getElementById('password2').placeholder = "Reenter new password";
+                        document.getElementById('oldPassword').style.display = "block";
+                        hasPW = true;
+                    }
+                    //populate security question
+                    if(localStorage.getItem('securityQuestion') != null){
+                        ocument.getElementById('secQChoice').value = localStorage.getItem('securityQuestion');
+                    }
+                    //populate security answer
+                    if(localStorage.getItem('securityAnswer') != null){
+                        document.getElementById('userAnswer1').value = localStorage.getItem('securityAnswer');
+                        document.getElementById('userAnswer2').value = localStorage.getItem('securityAnswer');
+                    }
+                    
+                    function setSetup(){
+                        var oldPassword = document.getElementById("oldPassword").value;
+                        var firstPassword = document.getElementById("password1").value;
+                        var secondPassword = document.getElementById("password2").value;
+                        var secQuestion = document.getElementById("secQChoice").value;
+                        var secAnswer1 = document.getElementById("userAnswer1").value;
+                        var secAnswer2 = document.getElementById("userAnswer2").value;
+                        removeDynamicContent(); //clear dynamic content
+                    
+                        //check to make sure all fields have been filled in
+                        if(firstPassword == "" || secondPassword == "" || secQuestion == "" || secAnswer1 == "" || secAnswer2 == ""){
+                            navigator.notification.alert(
+                            "Please fill in all fields",
+                            tempFunction,
+                            "Incomplete Setup",
+                            "OK"
+                            );
+                        }
+                        //user has already created a PW.
+                        else if(hasPW == true){
+                            //passwords match and sec answers match
+                            if(firstPassword == secondPassword && oldPassword == localStorage.getItem("password") && secAnswer1 == secAnswer2){
+                                localStorage.setItem("password", firstPassword);
+                                localStorage.setItem("securityQuestion", secQuestion);
+                                localStorage.setItem("securityAnswer", secAnswer1);
+                                //determine which page to go to
+                                if(hasLoggedIn == true){
+                                    location.reload();
+                                        $(':mobile-pagecontainer').pagecontainer('change', '#certificatePage');
+                                }
+                                else{
+                                    location.reload();
+                                        $(':mobile-pagecontainer').pagecontainer('change', '#loginPage');
+                                }
+                            }
+                            //passwords do not match
+                            else if(firstPassword != secondPassword){
+                                navigator.notification.alert(
+                                "Passwords do not match. Please try again.",
+                                tempFunction,
+                                "Not A Match",
+                                "OK"
+                                );                        
+                            }
+                            //old PW doesnt match stored PW
+                            else if(oldPassword != localStorage.getItem("password")){
+                                navigator.notification.alert(
+                                "The old password is incorrect. Please try again.",
+                                tempFunction,
+                                "Incorrect Password",
+                                "OK"
+                                ); 
+                            }
+                            //sec answers do not match
+                            else{
+                                navigator.notification.alert(
+                                "Security answers do not match. Please try again.",
+                                tempFunction,
+                                "Not A Match",
+                                "OK"
+                                );                        
+                            }
+                        }
+                        //set password and security for the first time
+                        else{
+                            //passwords match and sec answers match
+                            if(firstPassword == secondPassword && secAnswer1 == secAnswer2){
+                                localStorage.setItem("password", firstPassword);
+                                localStorage.setItem("securityQuestion", secQuestion);
+                                localStorage.setItem("securityAnswer", secAnswer1);
+                                //determine which page to go to
+                                if(hasLoggedIn == true){
+                                    location.reload();
+                                        $(':mobile-pagecontainer').pagecontainer('change', '#certificatePage');
+                                }
+                                else{
+                                    location.reload();
+                                        $(':mobile-pagecontainer').pagecontainer('change', '#loginPage');
+                                }
+                            }
+                            //passwords do not match
+                            else if(firstPassword != secondPassword){
+                                navigator.notification.alert(
+                                "Passwords do not match. Please try again.",
+                                tempFunction,
+                                "Not A Match",
+                                "OK"
+                                );                        
+                            }
+                            //sec answers do not match
+                            else{
+                                navigator.notification.alert(
+                                "Security answers do not match. Please try again.",
+                                tempFunction,
+                                "Not A Match",
+                                "OK"
+                                );                        
+                            }
+                            
+                        }
+                    }
+                </script>
+            </div>
+  	</div>
+  	
+
+    
+    
+    <!--confirm password to delete setup-->
+    <div data-role="page" align="center" id="confirmPassword">
+    	
+  		<div data-role="header" class="pageHeader"><a href="" data-icon="home" onclick="homeIconClicked();" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-home ui-corner-all "></a><a href="#mypanel" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-gear ui-corner-all"></a>
+    		<table>
+  				<tr>
+  					<td class="certTable">
+  						<h1>Confirm Password</h1>
+  					</td>
+  				</tr>
+  			</table>
+  		</div>
+  		<div data-role="content" class="pageBody">
+  			<form>
+				<input id="confirmUserPassword" type="password" placeholder="Enter Password" value="" />
+			</form>
+			<a data-role="button" data-inline="true" onclick="confirmForDelete();">Delete Setup</a>
+                        <a href="#forgotPassword" data-role="button" data-inline="true">Forgot Password?</a>
+  		</div>
+  	</div>
+  	
+  	
+  	<!--forgot password; answer security question-->
+  	<div data-role="page" align="center" id="forgotPassword">
+  		<div data-role="header" class="pageHeader"><a href="" data-icon="home" onclick="homeIconClicked();" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-home ui-corner-all "></a><a href="#mypanel" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-gear ui-corner-all"></a>
+  			<table>
+  				<tr>
+  					<td class="certTable">
+  						<h1>Forgot Password</h1>
+  					</td>
+  				</tr>
+  			</table> 			
+  		</div>
+  		<div data-role="content" class="pageBody">
+  			<h3 id="secQuest"><script>document.getElementById("secQuest").innerHTML = "Question: " + localStorage.getItem("securityQuestion");</script></h3>
+  			<form>
+				<input id="confirmUserSecurity" type="password" placeholder="Answer" value="" />
+			</form>
+			<a data-role="button" data-inline="true" onclick="confirmSecurityQ();">Confirm</a>
+  		</div>
+  	</div>
+  	
+  	
+  	
+  	
+  	
+  	<!--about page-->
+	<div data-role="page" align="center" id="aboutPage">
+  	
+  		<div data-role="header" class="pageHeader"><a href="" data-icon="home" onclick="homeIconClicked();" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-home ui-corner-all "></a><a href="#mypanel" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-gear ui-corner-all"></a>
+  			<table>
+  				<tr>
+  					<td class="certTable">
+  						<h1>About Page</h1>
+  					</td>
+  				</tr>
+  			</table>
+  			
+  		</div>
+  		<div data-role="content" class="pageBody">
+  			adding info will go here
+  		</div>
+  	</div>
+  	
+  	
+  	<!--set password status-->
+  	<div data-role="page" align="center" id="passwordStatus">
+  		<div data-role="header" class="pageHeader"><a href="" data-icon="home" onclick="homeIconClicked();" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-home ui-corner-all "></a><a href="#mypanel" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-gear ui-corner-all"></a>
+  			<table>
+  				<tr>
+  					<td class="certTable">
+  						<h1>Set Password Status</h1>
+  					</td>
+  				</tr>
+  			</table>
+  			
+  		</div>
+  		<div data-role="content" class="pageBody">
+  			<h3>Password:</h3>
+				<select id="pwStatusChoices">
+					<option value="enabled">Enabled</option>
+					<option value="disabled">Disabled</option>
+				</select>
+			<a data-role="button" data-inline="true" onclick="setPasswordStatus();">Submit</a>
+  		</div>
+  	</div>
+  	
+  	
+  	<!--certificate page-->
+  	<div data-role="page" align="center" id="certificatePage">
+  	
+  		<div data-role="header" class="pageHeader"><a href="" data-icon="home" onclick="homeIconClicked();" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-home ui-corner-all "></a><a href="#mypanel" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-gear ui-corner-all"></a>
+  			<table>
+  				<tr>
+  					<td class="certTable">
+  						<h1>My Certificates</h1>
+  					</td>
+  				</tr>
+  			</table>
+  			
+  		</div>
+            
+            
+      <!--popup for image-->
+      <div data-role="popup" id="imagePopup">
+      	<div data-role="header">
+            <h2>Images</h2><a href="#" data-icon="mail" onclick="sendImageEmail();" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-mail ui-corner-all "></a><a href="#" onclick="backToEditPopup()" id="backToEdit" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-back ui-corner-all" data-rel='popup' data-position-to='window' data-transition='pop'></a>
+      	</div>
+          <div data-role="content" class="ui-content">
+              <div id="slider">
+                  <div><img  id="imagePopupFront" src="" align="center" class="sliderImage" /></div>
+                  <div><img  id="imagePopupBack" src="" align="center" class="sliderImage" /></div>
+              </div>
+              <script>
+                  //function to handle going back
+                  function backToEditPopup(){
+                      $('#imagePopup').one("popupafterclose", function(){$('#editCertInfo').popup("open")}).popup("close");
+                  }
+                  $("#slider").owlCarousel({
+                      navigation : false,
+                      slideSpeed : 300,
+                      paginationSpeed : 400,
+                      singleItem:true
+                  });
+                  /// email function
+                  function sendImageEmail(){
+                      var id = document.getElementById("hiddenId").value;
+                      localforage.getItem(id+"imgFront", function(err, value){
+                          /*navigator.notification.alert(
+                                    newValue,
+                                    tempFunction,
+                                    "img data",
+                                    "OK"
+                                    );*/
+                        //email with attachment
+                        cordova.plugin.email.open({
+                            subject: 'Test',
+                            attachments:[
+                                'base64:icon2.png/' + value
+                            ] 
+                        });
+                      });
+                      
+                  }
+                  
+                  
+              </script>
+          </div>
+      </div>
+      
+      
+      <!--popup for edit-->
+      <div data-role="popup" id="editCertInfo">
+      	<div data-role="header">
+                <a href="#" onclick="populateImgPopup()" id="seeImages" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-eye ui-corner-all" data-rel='popup' data-position-to='window' data-transition='pop'></a>
+      		<a href="#editPage" onclick="populateEditPage()" id="editBtnFromPopup" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-edit ui-corner-all "></a>
+      		
+      	</div>
+     	<div data-role="content" class="ui-content"> 
+        	<table> <!--text info table-->
+  				<tr>
+  					<td>
+  						<h2>Certificate Info</h2>
+  						Title: <span id="popupCertTitle"></span>
+                                                <br/><br/>
+                                                <span id="popupDisplayNotiInfo"></span><br>
+                                                
+                                                
+                                                <input type="hidden" id="hiddenId" value="" />
+  					</td>
+  				</tr>	
+  			</table>
+  			
+  			<script>
+                            function populateImgPopup(){
+                                $('#editCertInfo').one("popupafterclose", function(){$('#imagePopup').popup("open")}).popup("close");
+                            }
+                            
+  				function populateEditPopup(clickedId){
+  					$("li").click(function(){
+  						console.log("id clicked: " + clickedId);
+  						//title get
+  						localforage.getItem(clickedId+"title", function(err, value){
+  							console.log(value);
+  							document.getElementById("popupCertTitle").innerHTML = value;
+  						});
+  						//noti info get
+  						localforage.getItem(clickedId+"notiInfo", function(err, value){
+  							console.log(value);
+  							document.getElementById("popupDisplayNotiInfo").innerHTML = value.join('');
+  						});
+  						
+  						//front img get
+  						localforage.getItem(clickedId+"imgFront", function(err, value){
+  							console.log(value);
+  							document.getElementById("imagePopupFront").src = value;
+  						});
+  						//back img get
+  						localforage.getItem(clickedId+"imgBack", function(err, value){
+  							console.log(value);
+  							document.getElementById("imagePopupBack").src = value;
+  						});
+                                                
+                                                
+                                                
+                                                
+                                                
+                                               
+  						document.getElementById("hiddenId").value = clickedId;
+                                                console.log("value of hidden field: " +document.getElementById("hiddenId").value);
+                                        });
+  					
+  				}
+  			</script>
+     	</div>
+      </div>
+  		
+  		<!--certificate list-->
+  		<div data-role="content" class="pageBody">
+  			<a data-role="button" data-inline="true" data-icon="plus" onclick="goToAddCert();">Add</a>
+  			<ol id="certList" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Search..." >  
+                  <script>
+                  	//initialize listview
+                  	$("#certList").listview();
+                  
+                  	//set DB names
+                  	var listItemStore = localforage.createInstance({
+                            name: "listItemDB"
+			});
+					localforage.config({
+						name: "certAppStorage"
+					});
+					
+                  	//localforage DB
+					localforage.length(function(err, numberOfKeys){
+						console.log("# of keys: " +numberOfKeys);
+					});
+					
+					localforage.keys(function(err, keys){
+						console.log("all of the keys: " +keys);
+						
+					});
+					//listItemDB
+					listItemStore.length(function(err, numberOfKeys){
+						console.log("# of keys in listItemDB: " +numberOfKeys);
+					});
+					listItemStore.keys(function(err, keys){
+						console.log("all of the keys in listItemDB: " +keys);
+						
+					});
+                                        /*
+					//LOCALFORAGE REMOVE
+					localforage.iterate(function(value, key, iterationNumber) {
+					    //used to remove everything in all databases
+					    var item = key;
+					    localforage.removeItem(item, function(err){
+					    	console.log("removed: " + item);
+					    });
+					});
+					
+					//LISTITEMSTORE REMOVE
+					listItemStore.iterate(function(value, key, iterationNumber) {
+					    //used to remove everything in all databases
+					    var item = key;
+					    listItemStore.removeItem(item, function(err){
+					    	console.log("removed: " + item);
+					    });
+					});
+					*/
+					//populate the listview 
+                  	listItemStore.iterate(function(value, key, iterationNumber) {			    
+					    console.log("key is: "+key+ " value: "+value);
+					    console.log("end of iteration #: " + iterationNumber);
+					    $("#certList").append(value);
+					}).then(function() {
+						$("#certList").listview('refresh');
+					    console.log('Iteration has completed');
+					});
+                  </script>
+            </ol>
+  		</div>
+  		
+  		
+  	</div>
+  	
+  	
+  
+  	
+  	
+  	<!--add certificate-->
+  	<div data-role="page" align="center" id="addCertificate">
+  		<div data-role="header" class="pageHeader"><a href="" data-icon="home" onclick="homeIconClicked();" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-home ui-corner-all "></a><a href="#mypanel" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-gear ui-corner-all"></a>
+  			<table>
+  				<tr>
+  					<td class="certTable">
+  						<h1>Add Certificate</h1>
+  					</td>
+  				</tr>
+  			</table>
+  		</div>
+  		<div data-role="content" class="pageBody">
+  		
+  				<table> <!--text info table-->
+  					<tr>
+  						<td>
+  							<h3>Title</h3>
+  							<input id="certTitle" type="text" placeholder="Title..." value="" />
+                                                        <table> <!--used for aligning label and icon-->
+                                                            <tr>
+                                                                <td>
+                                                                    <h3>Set Notification</h3>
+                                                                </td>
+                                                                <td >
+                                                                    <a href="#notificationPopupStatus" data-rel="popup" data-inline="true" class="ui-btn ui-btn-icon-notext ui-icon-plus ui-corner-all" onclick="addMoreSetNotifi();"></a>
+                                                                    <!--Notification Popup-->
+                                                                    <div data-role="popup" id="notificationPopupStatus" data-transition="fade">
+                                                                        <p id="notiPopupMessage"><p>
+                                                                        <script>
+                                                                            document.getElementById("notiPopupMessage").innerHTML = "Added New Notification Field.";
+                                                                        </script>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <div id="addMoreNotifications">
+                                                            <h4>Notification 1</h4>
+                                                            <label class="addLabel">Message</label><input id="certMessage1" data-wrapper-class="notifiItems" type="text" value="" />
+                                                            <label class="addLabel">Date</label><input id="certExpDate1" data-wrapper-class="notifiItems" type="date" value="" />
+                                                            <label class="addLabel">Time</label><input id="certTime1" data-wrapper-class="notifiItems" type="time" value="" /><br>
+                                                        </div>
+  						</td>
+  					</tr>
+  				</table>
+  				<table> <!--image table-->
+  					<tr>
+  						<td>
+  							<a data-role="button" data-inline="true" onclick="takeFrontPicture();">Front</a>
+  						</td>
+  						<td>
+  							<a data-role="button" data-inline="true" onclick="takeBackPicture();">Back</a>
+  						</td>
+  					</tr>
+  					<tr>
+  						<td>
+  							<img id="frontImage" width="120px" height="80px" style="display: none" src="">
+  						</td>
+  						<td>
+  							<img id="backImage" width="120px" height="80px" style="display: none" src="">
+  						</td>
+  					</tr>
+  				</table>
+	        	<script>
+	        		//front image functions
+	        		function takeFrontPicture(){
+	        			navigator.camera.getPicture(onFrontSuccess, onFail, {quality: 50,
+	        				destinationType: Camera.DestinationType.DATA_URL, 
+	        				correctOrientation: true
+	        				});
+	        		}
+	        		function onFrontSuccess(imageData){
+	        			var image = document.getElementById("frontImage");
+                                        
+	        			image.src = "data:image/jpeg;base64," + imageData;
+	        			image.style.display = 'block';
+                                        
+	        		}
+	        		function onFail(message){
+                                    navigator.notification.alert(
+                                    "Failed: " + message,
+                                    tempFunction,
+                                    "Picture Failed",
+                                    "OK"
+                                    );
+	        		}
+	        		
+	        		//back image funtions
+	        		function takeBackPicture(){
+	        			navigator.camera.getPicture(onBackSuccess, onFail, {quality: 50,
+	        				destinationType: Camera.DestinationType.DATA_URL,
+	        				correctOrientation: true
+	        				});
+	        		}
+	        		function onBackSuccess(imageData){
+	        			var image = document.getElementById("backImage");
+	        			image.src = "data:image/jpeg;base64," + imageData;
+	        			image.style.display = 'block';
+	        		}
+	        		
+                                function addMoreSetNotifi(){
+                                    notiCounter++;
+                                    console.log("notiCounter in addMoreSetNotifi: " + notiCounter);
+                                    var anotherHeaderNoti = "<h4 class='removable'>Notification "+notiCounter+"</h4>";
+                                    var anotherMessageNoti = "<label class='addLabel removable'>Message</label><input class='removable' id='certMessage"+notiCounter+"' data-wrapper-class='notifiItems' type='text' value='' />";
+                                    var anotherDateNoti = "<label class='addLabel removable'>Date</label><input class='removable' id='certExpDate"+notiCounter+"' data-wrapper-class='notifiItems' type='date' value='' />";
+                                    var anotherTimeNoti = "<label class='addLabel removable'>Time</label><input class='removable' id='certTime"+notiCounter+"' data-wrapper-class='notifiItems' type='time' value='' /><br>";
+                                    $("#addMoreNotifications").append(anotherHeaderNoti).enhanceWithin();
+                                    $("#addMoreNotifications").append(anotherMessageNoti).enhanceWithin();
+                                    $("#addMoreNotifications").append(anotherDateNoti).enhanceWithin();
+                                    $("#addMoreNotifications").append(anotherTimeNoti).enhanceWithin();
+                                    
+                                }
+	        		
+	        	</script>
+  			<a data-role="button" data-inline="true" onclick="createCert();">Create</a>
+  		</div>
+  	</div>
+  	
+  	
+  	
+  	
+  	<!--edit certificate-->
+  	<div data-role="page" align="center" id="editPage">
+  		<div data-role="header" class="pageHeader"><a href="" onclick="homeIconClicked();" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-home ui-corner-all "></a><a href="#mypanel" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-gear ui-corner-all"></a>
+  			<table>
+  				<tr>
+  					<td class="certTable">
+  						<h1>Edit Certificate</h1>
+  					</td>
+  				</tr>
+  			</table>
+  			
+  		</div>
+  		<div data-role="content" class="pageBody">
+  		
+  				<table> <!--text info table-->
+  					<tr>
+  						<td>
+  							<label class="addLabel">Title</label>
+  							<input type="text" id="editCertTitle" value="" />
+                                                        <input type="hidden" id="hiddenCertTitle" value=""/>
+                                                        <input type="hidden" id="hiddenNumOfNoti" value=""/>
+                                                        <input type="hidden" id="hiddenLengthOfNoti" value=""/>
+  							<label class="addLabel">Notifications</label>
+                                                        <div id="notiHolder">
+                                                            
+                                                        </div>
+  							<!--<input id="editCertExpDate" type="date" value="" />-->
+  						</td>
+  					</tr>
+  				</table>
+  				<table> <!--image table-->
+  					<tr>
+  						<td>
+  							<a data-role="button" data-inline="true" onclick="takeFrontPictureEdit();">Front</a>
+  						</td>
+  						<td>
+  							<a data-role="button" data-inline="true" onclick="takeBackPictureEdit();">Back</a>
+  						</td>
+  					</tr>
+  					<tr>
+  						<td>
+  							<img id="editFrontImage" width="120px" height="80px" style="display: block" src="" />
+  						</td>
+  						<td>
+  							<img id="editBackImage" width="120px" height="80px" style="display: block" src="" />
+  						</td>
+  					</tr>
+  				</table>
+                    
+                    <script>
+                        function populateEditPage(){ 
+                            var clickedId = document.getElementById("hiddenId").value;
+                            console.log("clickedId: "+clickedId);
+                            console.log("id clicked: " + clickedId);
+                            //title get
+                            localforage.getItem(clickedId+"title", function(err, value){
+                                console.log(value);
+  				document.getElementById("editCertTitle").value = value;
+                                document.getElementById("hiddenCertTitle").value = value;
+                            });
+                            //length get
+                            localforage.getItem(clickedId+"notiLength", function(err, value){
+                            	console.log(value);
+  				document.getElementById("hiddenLengthOfNoti").value = value;
+                            });
+  						
+  						
+                            //front img get
+                            localforage.getItem(clickedId+"imgFront", function(err, value){
+                            	console.log(value);
+  				document.getElementById("editFrontImage").src = value;
+                                document.getElementById("editFrontImage").style.display = "block";
+                            });
+                            //back img get
+                            localforage.getItem(clickedId+"imgBack", function(err, value){
+  				console.log(value);
+  				document.getElementById("editBackImage").src = value;
+                                document.getElementById("editBackImage").style.display = "block";
+                            });
+                            //get number of notifications
+                            localforage.getItem(clickedId+"notiLength", function(err, value){
+                                console.log("how many noti: "+value);
+                                setAndDisplay(value, clickedId);
+                            });
+                        }        
+                        
+
+                        console.log("before for loop; after length get");
+                        function setAndDisplay(num, passedId){
+                            var editNotiId, editNotiMessage, editNotiDate, editNotiTime; //dynamic html variable
+                            //used for setting unique ids for notifications
+                            var idNum = 1;
+                            var messageNum = 1;
+                            var dateNum = 1;
+                            var timeNum = 1;
+                            //for loop variable
+                            var a; 
+                            //set global variable used in saveEditCert()
+                            testy = num;
+                            for(a = 1; a <= num; a++){
+                            console.log("in for loop");
+                            console.log("value of for loop variable: "+a);
+                            //get info and create html and append
+                            localforage.getItem(passedId+"notiId"+a, function(err, value){
+                                editNotiId = "<label class='addLabel removable'>ID</label><input class='removable' data-wrapper-class='editNotifiItems' type='text' id='editNotiId"+idNum+"' value='"+value+"' readonly />"; //id
+                                $("#notiHolder").append(editNotiId).enhanceWithin();
+                                console.log("editNotiId: "+value);
+                                console.log("id value: "+idNum);
+                                idNum++;
+                            });
+                            localforage.getItem(passedId+"message"+a, function(err, value){
+                                editNotiMessage = "<label class='addLabel removable'>Message</label><input class='removable' data-wrapper-class='editNotifiItems' type='text' id='editNotiMessage"+messageNum+"' value='"+value+"' />";//message
+                                $("#notiHolder").append(editNotiMessage).enhanceWithin();
+                                console.log("editNotiMessage: "+value);
+                                console.log("id value: "+messageNum);
+                                messageNum++;
+                            });
+                            localforage.getItem(passedId+"expDate"+a, function(err, value){
+                                editNotiDate = "<label class='addLabel removable'>Date</label><input class='removable' data-wrapper-class='editNotifiItems' type='date' id='editNotiDate"+dateNum+"' value='"+value+"' />";//date
+                                $("#notiHolder").append(editNotiDate).enhanceWithin();
+                                console.log("editNotiDate: "+value);
+                                console.log("id value: "+dateNum);
+                                dateNum++;
+                            });
+                            localforage.getItem(passedId+"time"+a, function(err, value){
+                                editNotiTime = "<label class='addLabel removable'>Time</label><input class='removable' data-wrapper-class='editNotifiItems' type='time' id='editNotiTime"+timeNum+"' value='"+value+"' /><br />";//time
+                                $("#notiHolder").append(editNotiTime).enhanceWithin();
+                                console.log("editNotiTime: "+value);
+                                console.log("id value: "+timeNum);
+                                timeNum++;
+                            });
+  						
+  					
+  					
+                            }
+                        }
+                                //front edit image functions
+	        		function takeFrontPictureEdit(){
+	        			navigator.camera.getPicture(onFrontSuccessEdit, onFailEdit, {quality: 50,
+	        				destinationType: Camera.DestinationType.DATA_URL, 
+	        				correctOrientation: true
+	        				});
+	        		}
+	        		function onFrontSuccessEdit(imageData){
+	        			var image = document.getElementById("editFrontImage");
+	        			image.src = "data:image/jpeg;base64," + imageData;
+	        			image.style.display = 'block';
+	        		}
+	        		function onFailEdit(message){
+                                    navigator.notification.alert(
+                                    "Failed: " + message,
+                                    tempFunction,
+                                    "Picture Failed",
+                                    "OK"
+                                    );
+	        		}
+	        		
+	        		//back edit image funtions
+	        		function takeBackPictureEdit(){
+	        			navigator.camera.getPicture(onBackSuccessEdit, onFailEdit, {quality: 50,
+	        				destinationType: Camera.DestinationType.DATA_URL,
+	        				correctOrientation: true
+	        				});
+	        		}
+	        		function onBackSuccessEdit(imageData){
+	        			var image = document.getElementById("editBackImage");
+	        			image.src = "data:image/jpeg;base64," + imageData;
+	        			image.style.display = 'block';
+	        		}
+                    </script>
+                    
+  			<a data-role="button" data-inline="true" onclick="saveEditCert();">Update</a>
+  		</div>
+  	</div>
+        
+        <!-- test page -->
+        <div data-role="page" align="center" id="testPage">
+            <div data-role="header"><a href="" onclick="homeIconClicked();" class="ui-btn ui-btn-left ui-btn-icon-notext ui-icon-home ui-corner-all "></a><a href="#mypanel" class="ui-btn ui-btn-right ui-btn-icon-notext ui-icon-gear ui-corner-all"></a>
+                
+            </div>
+            <div data-role="content">
+                <button type="button" onclick="testingDis();">Click</button>
+                <div id="hibye"></div>
+                <script>
+ 
+                
+                 
+                </script>
+              
+                    
+                    
+                   
+            </div>
+        </div>
+  	
+  </div>
+   <script>   
+       app.initialize();
+    var hasLoggedIn; //used to determine if person has logged in
+    var pwChoice;
+    var counter;
+    var notiCounter = 1; //keeps track of how many notifications will be used for that certificate
+    var testy;
+    var tempVar; //used for incrementing localStorage item
+    var listItemCounter = 0; //used for listItem array
+    if(localStorage.getItem("pwStatus") == "disabled"){
+    	hasLoggedIn = true;
+    } 
+    else{
+    	hasLoggedIn = false;
+    }  
+    console.log(hasLoggedIn);
+    //initialize counter; if no items in db, reset counter
+    localforage.length(function(err, numberOfKeys){
+	if(numberOfKeys == 0){
+            counter = 0;
+            localStorage.setItem("notificationId",counter);
+            console.log("counter is 0");
+        }
+        else{
+            console.log("counter is: " + localStorage.getItem("notificationId"));
+        }
+    });
+   
+    function determinePassword(){
+       	//if they dont have pw go to page, otherwise, confirm pw then go to page
+       	if(localStorage.getItem("password") == null){
+       		$(':mobile-pagecontainer').pagecontainer('change', '#setup');
+       	}
+       	else{
+       		$(':mobile-pagecontainer').pagecontainer('change', '#confirm');
+       	}
+    }
+        
+    function goToCertificate(){
+       	var enteredPassword = document.getElementById("userPassword").value;
+       	if(localStorage.getItem("pwStatus") == "disabled"){
+       		hasLoggedIn = true;
+       		$(':mobile-pagecontainer').pagecontainer('change', '#certificatePage');
+       	}
+       	else if(localStorage.getItem("password") == enteredPassword){
+       		hasLoggedIn = true;
+       		$(':mobile-pagecontainer').pagecontainer('change', '#certificatePage');
+       	}
+       	else{
+       		navigator.notification.alert(
+    		"The password you have entered is incorrect.",
+    		tempFunction,
+    		"Incorrect Password",
+    		"OK"
+                );
+       	}
+    }
+    function clearLS(){
+      	localStorage.removeItem("password");
+       	localStorage.removeItem("securityQuestion");
+       	localStorage.removeItem("securityAnswer");
+       	localStorage.removeItem("pwStatus")
+       	location.reload();
+    }
+
+  	
+  	function confirmForDelete(){
+	  	var enteredPassword = document.getElementById("confirmUserPassword").value; 
+	  	if(localStorage.getItem("password") == enteredPassword){
+                        //clear LS
+			localStorage.removeItem("password");
+                        localStorage.removeItem("securityQuestion");
+                        localStorage.removeItem("securityAnswer");
+                        //clear fields
+                        document.getElementById("password1").value = "";
+                        document.getElementById("password2").value = "";
+                        document.getElementById("oldPassword").value = "";
+                        document.getElementById("secQChoice").value = "";
+                        document.getElementById("userAnswer1").value = "";
+                        document.getElementById("userAnswer2").value = "";
+                        document.getElementById("confirmUserPassword").value = "";
+                        document.getElementById("confirmUserSecurity").value = "";
+                        if(hasLoggedIn == true){
+                            $(':mobile-pagecontainer').pagecontainer('change', '#certificatePage');
+                        }
+                        else{
+                            $(':mobile-pagecontainer').pagecontainer('change', '#loginPage');
+                        }
+                        //reset flag to see if user has a PW or not.
+                        hasPW = false;
+	  	}
+	  	else{
+                    //wrong password
+                    navigator.notification.alert(
+                    "Your entered password was incorrect",
+                    tempFunction,
+                    "Incorrect Password",
+                    "OK"
+                    );
+	  	}
+	}
+	
+	function confirmSecurityQ(){
+		var enteredAnswer = document.getElementById("confirmUserSecurity").value;
+		if(localStorage.getItem("securityAnswer") == enteredAnswer){
+                    //clear fields
+                    document.getElementById("password1").value = "";
+                    document.getElementById("password2").value = "";
+                    document.getElementById("oldPassword").value = "";
+                    document.getElementById("secQChoice").value = "";
+                    document.getElementById("userAnswer1").value = "";
+                    document.getElementById("userAnswer2").value = "";
+                    document.getElementById("confirmUserPassword").value = "";
+                    document.getElementById("confirmUserSecurity").value = "";
+                    forgotPassword();
+                    if(hasLoggedIn == true){
+                        $(':mobile-pagecontainer').pagecontainer('change', '#certificatePage');
+                    }
+                    else{
+                        $(':mobile-pagecontainer').pagecontainer('change', '#loginPage');
+                    }
+	  	}
+	  	else{
+                    //wrong answer
+                    navigator.notification.alert(
+                    "The entered answer was incorrect.",
+                    tempFunction,
+                    "Incorrect Answer",
+                    "OK"
+                    );
+	  	}
+		
+	}
+	
+	function tempFunction(){
+		console.log("Im a temp function.");
+	}
+	
+	function forgotPassword(){
+            //show user password
+            navigator.notification.alert(
+            "Your password is: " + localStorage.getItem("password"),
+            tempFunction,
+            "Password Recovery",
+            "OK"
+            );
+		
+	}
+  	
+  	function homeIconClicked(){
+            removeDynamicContent();
+  		if(hasLoggedIn == true){
+  			$(':mobile-pagecontainer').pagecontainer('change', '#certificatePage');
+  		}
+  		else{
+  			$(':mobile-pagecontainer').pagecontainer('change', '#loginPage');
+  		}
+  	}
+   	
+   	
+   	function setPasswordStatus(){
+    	pwChoice = document.getElementById("pwStatusChoices").value;
+    	localStorage.setItem("pwStatus", pwChoice);
+        removeDynamicContent(); //remove dynamic content
+    	if(hasLoggedIn == true){
+            location.reload();
+  			$(':mobile-pagecontainer').pagecontainer('change', '#certificatePage');
+  		}
+  		else{
+                    location.reload();
+  			$(':mobile-pagecontainer').pagecontainer('change', '#loginPage');
+  		}
+    }
+    
+    function goToAddCert(){
+    	$(':mobile-pagecontainer').pagecontainer('change', '#addCertificate');
+    }
+    
+    function removeDynamicContent(){
+        $(".removable").remove();
+        notiCounter = 1;
+    }
+    
+    function createCert(){
+        //used in loops
+        var i, j;
+        //title
+    	var cTitle = document.getElementById("certTitle").value;
+        //array to hold all of notification IDs associated with cert
+        var arrayOfNoti = [];
+        //arrays to hold all notification info
+        var tempArray; //hold [ID, message, trigger time/date]
+        var arrayForNotiInfo = []; //hold noti info (used for display)
+        //used for notifications
+        var cNotiId;
+        var cExpDate;
+        var cNotiMessage;
+        var cNotiTime;
+        var goOff;
+        console.log("notiCounter in createCert(): "+notiCounter);
+        
+        //get all notifications
+        for(i = 1; i <= notiCounter; i++){
+            cNotiId = parseInt(localStorage.getItem("notificationId"));
+            cExpDate = document.getElementById("certExpDate"+i).value;
+            cNotiMessage = document.getElementById("certMessage"+i).value;
+            cNotiTime = document.getElementById("certTime"+i).value;
+            console.log("expdate: "+cExpDate);
+            //schedule notification                        
+            goOff = new Date((cExpDate + " " + cNotiTime).replace(/-/g, "/")).getTime();
+            goOff = new Date(goOff);
+
+            cordova.plugins.notification.local.schedule({
+                id: localStorage.getItem("notificationId"),
+                text: cNotiMessage,
+                at: goOff,
+                led: "FF0000",
+                sound: null
+            });
+            
+            //set info to storage which will be used in edit page as well as to display
+            localforage.setItem(cTitle+'notiId'+i, cNotiId, function(err, value) {
+                // Do other things once the value has been saved.
+                console.log("notiId value: "+value);
+            });
+            localforage.setItem(cTitle+'expDate'+i, cExpDate, function(err, value) {
+                // Do other things once the value has been saved.
+                console.log("expDate value: "+value);
+            });
+            localforage.setItem(cTitle+'message'+i, cNotiMessage, function(err, value) {
+                // Do other things once the value has been saved.
+                console.log("message value: "+value);
+            });
+            localforage.setItem(cTitle+'time'+i, cNotiTime, function(err, value) {
+                // Do other things once the value has been saved.
+                console.log("time value: "+value);
+            });
+            
+            
+            //used for nicer display
+            var tempId = "Notification " + parseInt(localStorage.getItem("notificationId")) + "<br>"; //get noti number
+            var tempMessage = cNotiMessage + "<br>"; //get message
+            var tempGoOff = goOff + "<br><br>";
+            //add notiID to array
+            arrayOfNoti[i-1] = parseInt(localStorage.getItem("notificationId"));
+            //add notification info to temp array
+            tempArray = [tempId, tempMessage, tempGoOff];
+            //store temp array value to array to hold all noti info
+            arrayForNotiInfo[i-1] = tempArray.join('');
+            //increment notiID
+            tempVar =  parseInt(localStorage.getItem("notificationId")) + 1;
+            localStorage.setItem("notificationId", tempVar);
+        }
+        console.log("arrayOfNoti for "+cTitle+": "+arrayOfNoti);
+        
+    	var cImgFront = document.getElementById("frontImage").src;
+    	var cImgBack = document.getElementById("backImage").src;
+    	console.log("cTitle is: " +cTitle);
+    	//now make images have their own popup when they are clicked
+    	
+    	
+    	var newCertificate = "<li data-filtertext='"+cTitle+"'><a id='"+cTitle+"' href='#editCertInfo' onclick='populateEditPopup(this.id)' data-rel='popup' data-position-to='window' data-transition='pop'><img class='listItemImg' src='"+cImgFront+"'><h2>"+cTitle+"</h2></a><a data-role='button' id='_"+cTitle+"' onclick='removeCert(this.id)' data-icon='delete'></a></li>";
+    	
+    	//clear fields in add certificate
+    	document.getElementById("certTitle").value = "";
+        for(j = 1; j <= notiCounter; j++){
+            document.getElementById("certExpDate"+j).value = "";
+            document.getElementById("certMessage"+j).value = "";
+            document.getElementById("certTime"+j).value = "";
+        }
+    	document.getElementById("frontImage").src = "";
+    	document.getElementById("frontImage").style.display = "none";
+    	document.getElementById("backImage").src = "";
+    	document.getElementById("backImage").style.display = "none";
+
+        //var getArrayLength = arrayForNotiInfo.length;
+        console.log("arrayForNotiInfo length: " + arrayForNotiInfo.length);
+        localforage.setItem(cTitle+'notiLength', notiCounter, function(err, value) {
+                // Do other things once the value has been saved.
+                console.log("length value: "+value);
+            });
+        
+        
+    	//set certificate details to storage
+    	Promise.all([
+		  localforage.setItem(cTitle+'key', counter),
+		  localforage.setItem(cTitle+'title', cTitle),
+		  listItemStore.setItem(cTitle+'listItem', newCertificate),
+		  localforage.setItem(cTitle+'imgFront', cImgFront),
+		  localforage.setItem(cTitle+'imgBack', cImgBack),
+                  localforage.setItem(cTitle+'notiInfo', arrayForNotiInfo)
+                  //localforage.setItem(cTitle+'notiLength', getArrayLength)
+		]).then(function() {
+		  //get values from storage
+		  return Promise.all([
+		    localforage.getItem(cTitle+'key'),
+		    localforage.getItem(cTitle+'title'),
+		    localforage.getItem(cTitle+'expDate'),
+		    listItemStore.getItem(cTitle+'listItem')
+		  ]);
+		}).then(function(values) {
+			//append to list and refrest list
+		  console.log('value from key is ' + values[0]);
+		  console.log('value from title is ' + values[1]);
+		  console.log('value from expDate is ' + values[2]);
+		  console.log('value from listItem is ' + values[3]);
+		  $("#certList").append(values[3]);
+                  $("#certList").listview('refresh');
+		});
+                
+        //let user know schedule was made
+        navigator.notification.alert(
+        "Your item, '"+cTitle+"' was successfully created.",
+    	tempFunction,
+    	"Successful Creation",
+    	"OK"
+        );
+
+        //remove dynamically added notifications
+        removeDynamicContent();
+        
+    	$(':mobile-pagecontainer').pagecontainer('change', '#certificatePage');
+    }
+    
+    
+    //%%Need to implement Notification updating
+    //Will be grabbing from dynamic content
+    //Use array length hidden field for for loop(s)
+    //remove dynamic content from edit page with hitting the "submit" button or the "home" button
+    //POSSIBLE**** add function that removes dynamic content on edit and add page
+    function saveEditCert(){
+        //old title name; used for deleting old cert
+        var oldCTitle = document.getElementById("hiddenCertTitle").value; //old title
+        //new values
+    	var cTitle = document.getElementById("editCertTitle").value; //title
+        //used for notifications
+        var cNotiId; //noti ID
+        var cNotiMessage; //noti message
+    	var cExpDate; // noti date
+        var cNotiTime; //noti time
+        var goOff; //combo of date & time
+        //images
+    	var cImgFront = document.getElementById("editFrontImage").src; //front image
+    	var cImgBack = document.getElementById("editBackImage").src; //back image
+        //number of noti
+        var numberOfNoti = testy;
+        //arrays to hold all notification info
+        var tempArray; //hold [ID, message, trigger time/date]
+        var arrayForNotiInfo = []; //hold noti info (used for display)
+        //used in for loops
+        var i,j,k;
+        //for loop to update info
+        for(i = 1; i <= numberOfNoti; i++){
+            console.log("inside noti update loop");
+            cNotiId = document.getElementById("editNotiId"+i).value;
+            cExpDate = document.getElementById("editNotiDate"+i).value;
+            cNotiMessage = document.getElementById("editNotiMessage"+i).value;
+            cNotiTime = document.getElementById("editNotiTime"+i).value;
+            console.log("expdate: "+cExpDate);
+            //schedule notification                        
+            goOff = new Date((cExpDate + " " + cNotiTime).replace(/-/g, "/")).getTime();
+            goOff = new Date(goOff);
+            
+            //update notification
+            cordova.plugins.notification.local.schedule({
+                id: cNotiId, //use notification id of existing notification
+                text: cNotiMessage,
+                at: goOff,
+                led: "FF0000",
+                sound: null
+            });  
+            
+            
+            
+            //set notification info to storage
+            localforage.setItem(cTitle+'notiId'+i, cNotiId, function(err, value) {
+                // Do other things once the value has been saved.
+                console.log("notiId value: "+value);
+            });
+            localforage.setItem(cTitle+'expDate'+i, cExpDate, function(err, value) {
+                // Do other things once the value has been saved.
+                console.log("expDate value: "+value);
+            });
+            localforage.setItem(cTitle+'message'+i, cNotiMessage, function(err, value) {
+                // Do other things once the value has been saved.
+                console.log("message value: "+value);
+            });
+            localforage.setItem(cTitle+'time'+i, cNotiTime, function(err, value) {
+                // Do other things once the value has been saved.
+                console.log("time value: "+value);
+            });
+            
+            
+            //used for nicer display
+            var tempId = "Notification " + cNotiId + "<br>"; //ID display
+            var tempMessage = cNotiMessage + "<br>"; //message display
+            var tempGoOff = goOff + "<br><br>"; //date&time display
+            //add notification info to temp array
+            tempArray = [tempId, tempMessage, tempGoOff];
+            //store temp array value to array to hold all noti info
+            arrayForNotiInfo[i-1] = tempArray.join('');
+            console.log("array to show in edit: "+arrayForNotiInfo[i-1]);
+        }
+    	
+    	
+    	var newCertificate = "<li data-filtertext='"+cTitle+"'><a id='"+cTitle+"' href='#editCertInfo' onclick='populateEditPopup(this.id)' data-rel='popup' data-position-to='window' data-transition='pop'><img class='listItemImg' src='"+cImgFront+"'><h2>"+cTitle+"</h2></a><a data-role='button' id='_"+cTitle+"' onclick='removeCert(this.id)' data-icon='delete'></a></li>";
+    	
+    	//clear fields in add certificate
+    	document.getElementById("editCertTitle").value = "";
+        for(j = 1; j <= notiCounter; j++){
+            document.getElementById("editNotiId"+j).innerHTML = "";
+            document.getElementById("editNotiDate"+j).value = "";
+            document.getElementById("editNotiMessage"+j).value = "";
+            document.getElementById("editNotiTime"+j).value = "";
+        }
+    	document.getElementById("editFrontImage").src = "";
+    	document.getElementById("editFrontImage").style.display = "none";
+    	document.getElementById("editBackImage").src = "";
+    	document.getElementById("editBackImage").style.display = "none";
+        
+        
+
+            
+
+            //set certificate details to storage
+            Promise.all([
+                      localforage.setItem(cTitle+'key', counter),
+                      localforage.setItem(cTitle+'title', cTitle),
+                      listItemStore.setItem(cTitle+'listItem', newCertificate),
+                      localforage.setItem(cTitle+'imgFront', cImgFront),
+                      localforage.setItem(cTitle+'imgBack', cImgBack),
+                      localforage.setItem(cTitle+'notiInfo', arrayForNotiInfo),
+                      localforage.setItem(cTitle+'notiLength', numberOfNoti)
+                    ]).then(function() {
+                      //get values from storage
+                      return Promise.all([
+                        localforage.getItem(cTitle+'key'),
+                        localforage.getItem(cTitle+'title'),
+                        listItemStore.getItem(cTitle+'listItem'),
+                        localforage.getItem(cTitle+'imgFront'),
+                        localforage.getItem(cTitle+'imgBack'),
+                        localforage.getItem(cTitle+'notiInfo'),
+                        localforage.getItem(cTitle+'notiLength')
+                      ]);
+                    }).then(function(values) {
+                      //append to list and refrest list
+                      console.log('value from key is ' + values[0]);
+                      console.log('value from title is ' + values[1]);
+                      console.log('value from listItem is ' + values[2]);
+                      console.log('value from imgFront is ' + values[3]);
+                      console.log('value from imgBack is ' + values[4]);
+                      console.log('value from notiInfo is ' + values[5]);
+                      console.log('value from notiLength is ' + values[6]);
+                      $("#certList").append(values[2]);
+                      $("#certList").listview('refresh');
+                    });
+            
+              //remove old cert 
+              //key remove
+              localforage.removeItem(oldCTitle+"key", function(err){
+                    console.log(itemToRemove+"key cleared");
+              });
+              //title remove
+              localforage.removeItem(oldCTitle+"title", function(err){
+                    console.log(itemToRemove+"title cleared");
+              });
+              //remove all notifications in storage related to old cert name
+              for(k = 1; k <=numberOfNoti; k++){
+                    //ID remove
+                    localforage.removeItem(oldCTitle+"notiId"+k, function(err){
+                            console.log(itemToRemove+"expDate cleared");
+                    });
+                    //message remove
+                    localforage.removeItem(oldCTitle+"message"+k, function(err){
+                            console.log(itemToRemove+"expDate cleared");
+                    });
+                    //expDate remove
+                    localforage.removeItem(oldCTitle+"expDate"+k, function(err){
+                            console.log(itemToRemove+"expDate cleared");
+                    });
+                    //time remove
+                    localforage.removeItem(oldCTitle+"time"+k, function(err){
+                            console.log(itemToRemove+"expDate cleared");
+                    });
+                }
+
+                //listview remove
+                listItemStore.removeItem(oldCTitle+"listItem", function(err){
+                    console.log(itemToRemove+"listItem cleared");
+                });
+
+                //front img remove
+                localforage.removeItem(oldCTitle+"imgFront", function(err){
+                    console.log(itemToRemove+"imgFront cleared");
+                });
+                //back img remove
+                localforage.removeItem(oldCTitle+"imgBack", function(err){
+                    console.log(itemToRemove+"imgBack cleared");
+                });
+            
+
+  		
+	  	//empty list so it can get repopulated
+	    	$("#certList").empty();
+	    	//populate the listview 
+	        listItemStore.iterate(function(value, key, iterationNumber) {			    
+                    console.log("key is: "+key+ " value: "+value);
+                    console.log("end of iteration #: " + iterationNumber);
+                    $("#certList").append(value);
+		}).then(function() {
+                    $("#certList").listview('refresh');
+                    console.log('Iteration has completed');
+		});
+
+
+                //let user know schedule was updated
+                navigator.notification.alert(
+                "Your item, '"+cTitle+"' was successfully updated.",
+                tempFunction,
+                "Successful Update",
+                "OK"
+                );
+
+                
+                //remove dynamically added notifications
+                removeDynamicContent();
+        
+    	$(':mobile-pagecontainer').pagecontainer('change', '#certificatePage');
+    }
+    
+    
+    function removeCert(itemToRemove){
+        var passedId = itemToRemove.substring(1); //remove "_"
+        var i;
+        
+        /*var w = confirm("Delete?");
+        if(w == true){
+            removeCertificate();
+        }
+        else{
+            alert("user cancelled");
+        }*/
+
+        //confirm to delete
+    	navigator.notification.confirm(
+            "Are you sure you want to delete '" + passedId + "'?",
+            removeCertificate,
+            "Delete Certificate",
+            "Cancel, Delete"
+    	);
+    	function removeCertificate(buttonPressed){
+            var len; //used in for loop
+
+            if(buttonPressed == 1){ 
+    		console.log("User cancelled");
+            }
+            else{
+            console.log("inside remove function");
+                localforage.getItem(passedId+"notiLength", function(err, value){
+                    len = value;
+                    console.log("value of len: "+len);
+                    console.log("value of value: "+value);
+                    //key remove
+                    localforage.removeItem(passedId+"key", function(err){
+                            console.log(itemToRemove+"key cleared");
+                    });
+                    //title remove
+                    localforage.removeItem(passedId+"title", function(err){
+                            console.log(itemToRemove+"title cleared");
+                    });
+                    //notifications remover
+                    for(i = 1; i <=len; i++){
+                        console.log("inside for loop");
+                        console.log("value of i: "+i);
+                        
+                        
+                        //get notification ID to be able to cancel it
+                        localforage.getItem(passedId+"notiId"+i, function(err, value){
+                            console.log("inside getting notiId to cancel it");
+                            console.log(passedId+"notiId"+i);
+                            console.log("Id value: "+value);
+                            //cancel notification
+                            cordova.plugins.notification.local.cancel(value, function() {
+                                console.log("removed cert noti: " + value);
+                            });
+                            //ID remove
+                            localforage.removeItem(passedId+"notiId"+i, function(err){
+                                console.log(itemToRemove+"id cleared");
+                            });
+                        });
+                        
+                        //message remove
+                        localforage.removeItem(passedId+"message"+i, function(err){
+                            console.log(itemToRemove+"message cleared");
+                        });
+                        //expDate remove
+                        localforage.removeItem(passedId+"expDate"+i, function(err){
+                            console.log(itemToRemove+"date cleared");
+                        });
+                        //time remove
+                        localforage.removeItem(passedId+"time"+i, function(err){
+                            console.log(itemToRemove+"time cleared");
+                        });
+                    }
+                    //listview remove
+                    listItemStore.removeItem(passedId+"listItem", function(err){
+                            console.log(itemToRemove+"listItem cleared");
+                    });
+
+                    //front img remove
+                    localforage.removeItem(passedId+"imgFront", function(err){
+                            console.log(itemToRemove+"imgFront cleared");
+                    });
+                    //back img remove
+                    localforage.removeItem(passedId+"imgBack", function(err){
+                            console.log(itemToRemove+"imgBack cleared");
+                    });
+                });
+                //let user know cert was deleted
+                navigator.notification.alert(
+                "Your item has been deleted and all its notifications have been cancelled",
+                repopulateListview,
+                "Item Deleted",
+                "OK"
+                );
+    		
+
+                function repopulateListview(){
+                    //iterate is finishing before deletes have finished
+                    //empty list so it can get repopulated
+                    $("#certList").empty();
+                    //populate the listview 
+                    listItemStore.iterate(function(value, key, iterationNumber) {			    
+                        console.log("key is: "+key+ " value: "+value);
+                        console.log("end of iteration #: " + iterationNumber);
+                        $("#certList").append(value);
+                    }).then(function() {
+                        $("#certList").listview('refresh');
+                        console.log('Iteration has completed');
+                    });
+                }
+            }
+    	
+    	}
+        
+    }
+
+    </script>
+        
+    </body>
+</html>
