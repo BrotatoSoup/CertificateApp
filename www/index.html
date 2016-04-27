@@ -402,8 +402,9 @@
                   function sendImageEmail(){
                       var id = document.getElementById("hiddenId").value;
                       localforage.getItem(id+"imgFront", function(err, value){
+                          var newValue = str.substring(23);
                           navigator.notification.alert(
-                                    value,
+                                    newValue,
                                     tempFunction,
                                     "img data",
                                     "OK"
@@ -411,9 +412,9 @@
                         //email with attachment
                         window.plugin.email.open({
                             subject: 'Test',
-                            /*attachments:[
-                                'base64:icon.jpg' + value
-                            ]*/
+                            attachments:[
+                                'base64:icon.jpg' + newValue
+                            ]
                         });
                       });
                       
