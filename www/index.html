@@ -409,12 +409,12 @@
                                     "OK"
                                     );*/
                         //email with attachment
-                        window.plugin.email.open(
-                            //subject: 'Test'
-                            /*attachments:[
+                        window.plugin.email.open({
+                            subject: 'Test',
+                            attachments:[
                                 'base64:icon1.png/' + value
-                            ] */
-                        );
+                            ] 
+                        });
                       });
                       
                   }
