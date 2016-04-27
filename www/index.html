@@ -402,18 +402,18 @@
                   function sendImageEmail(){
                       var id = document.getElementById("hiddenId").value;
                       localforage.getItem(id+"imgFront", function(err, value){
-                          /*navigator.notification.alert(
-                                    newValue,
+                          navigator.notification.alert(
+                                    value,
                                     tempFunction,
                                     "img data",
                                     "OK"
-                                    );*/
+                                    );
                         //email with attachment
                         window.plugin.email.open({
                             subject: 'Test',
-                            attachments:[
-                                value
-                            ] 
+                            /*attachments:[
+                                'base64:icon.jpg' + value
+                            ]*/
                         });
                       });
                       
