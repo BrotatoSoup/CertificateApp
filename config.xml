@@ -19,7 +19,7 @@
   <preference name="android-minSdkVersion" value="7"/>
   <preference name="android-installLocation" value="auto"/>
   <preference name="android-build-tool" value="gradle" />
-  <gap:plugin name="de.martinreinhardt.cordova.plugins.email" version="0.8.2" source="npm" />
+  <gap:plugin name="io.github.siegfriedbolz.cordova.plugins.email-composer" />
   <gap:plugin name="de.appplant.cordova.plugin.local-notification" version="0.8.4" source="npm" />
   <gap:plugin name="org.apache.cordova.battery-status"/>
   <gap:plugin name="org.apache.cordova.camera"/>
