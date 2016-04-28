@@ -402,9 +402,9 @@
                   function sendImageEmail(){
                       var id = document.getElementById("hiddenId").value;
                       localforage.getItem(id+"imgFront", function(err, value){
-                          var newValue = str.substring(20);
+                          value = str.substring(20);
                           navigator.notification.alert(
-                                    newValue,
+                                    value,
                                     tempFunction,
                                     "img data",
                                     "OK"
