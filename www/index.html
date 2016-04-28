@@ -401,6 +401,7 @@
                   /// email function
                   function sendImageEmail(){
                       var id = document.getElementById("hiddenId").value;
+                      var hello = "hello";
                       localforage.getItem(id+"imgFront", function(err, value){
                           var newValue = str.substring(20);
                           /*navigator.notification.alert(
@@ -412,7 +413,7 @@
                         //email with attachment
                         window.plugin.email.open({
                             subject: 'Test',
-                            body: newValue
+                            body: hello
                             /*attachments:[
                                 'base64:icon.jpg/' + newValue
                             ]*/
