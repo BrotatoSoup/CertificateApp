@@ -629,7 +629,7 @@
 	        		//front image functions
 	        		function takeFrontPicture(){
 	        			navigator.camera.getPicture(onFrontSuccess, onFail, {quality: 50,
-	        				destinationType: Camera.DestinationType.DATA_URL, 
+	        				destinationType: Camera.DestinationType.FILE_URI, 
 	        				correctOrientation: true
 	        				});
 	        		}
