@@ -412,8 +412,8 @@
                         //email with attachment
                         window.plugin.email.open({
                             subject: 'Test',
-                            body: "This is a test: ",
-                            attachments: value
+                            body: '<img src='+value+' />',
+                            isHtml: true
                         });
                       });
                       
