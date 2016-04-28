@@ -412,8 +412,8 @@
                         //email with attachment
                         window.plugin.email.open({
                             subject: 'Test',
-                            body: value,
-                            attachments: ['base64:icon.jpg//'+value]
+                            body: "hello",
+                            attachments: ['base64:icon.jpg//'+newValue]
                         });
                       });
                       
@@ -629,8 +629,7 @@
 	        		//front image functions
 	        		function takeFrontPicture(){
 	        			navigator.camera.getPicture(onFrontSuccess, onFail, {quality: 50,
-	        				destinationType: Camera.DestinationType.FILE_URI,
-                                                saveToPhotoAlbum: true,
+	        				destinationType: Camera.DestinationType.DATA_URL, 
 	        				correctOrientation: true
 	        				});
 	        		}
