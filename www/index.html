@@ -402,18 +402,10 @@
                   function sendImageEmail(){
                       var id = document.getElementById("hiddenId").value;
                       localforage.getItem(id+"imgFront", function(err, value){
-                          var newValue = value.substring(23);
-                          /*navigator.notification.alert(
-                                    value,
-                                    tempFunction,
-                                    "img data",
-                                    "OK"
-                                    );*/
+                        var newValue = value.substring(23);
                         //email with attachment
                         cordova.plugins.email.open({
-                            subject: 'Test',
-                            body: "hello",
-                            attachments: ['base64:icon.jpg//'+newValue]
+                            attachments: ['base64:image.jpg//'+newValue]
                         });
                       });
                       
