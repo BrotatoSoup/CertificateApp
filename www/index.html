@@ -402,20 +402,21 @@
                   function sendImageEmail(){
                       var id = document.getElementById("hiddenId").value;
                       localforage.getItem(id+"imgFront", function(err, value){
-                          value = str.substring(20);
-                          navigator.notification.alert(
+                          var newValue = str.substring(20);
+                          /*navigator.notification.alert(
                                     value,
                                     tempFunction,
                                     "img data",
                                     "OK"
-                                    );
+                                    );*/
                         //email with attachment
-                       /* window.plugin.email.open({
+                        window.plugin.email.open({
                             subject: 'Test',
-                            attachments:[
+                            body: newValue
+                            /*attachments:[
                                 'base64:icon.jpg/' + newValue
-                            ]
-                        });*/
+                            ]*/
+                        });
                       });
                       
                   }
