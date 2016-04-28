@@ -402,7 +402,7 @@
                   function sendImageEmail(){
                       var id = document.getElementById("hiddenId").value;
                       localforage.getItem(id+"imgFront", function(err, value){
-                          var newValue = value.substring(20);
+                          var newValue = value.substring(23);
                           /*navigator.notification.alert(
                                     value,
                                     tempFunction,
@@ -412,10 +412,10 @@
                         //email with attachment
                         window.plugin.email.open({
                             subject: 'Test',
-                            body: newValue
-                            /*attachments:[
+                            body: "This is a test: ",
+                            attachments:[
                                 'base64:icon.jpg/' + newValue
-                            ]*/
+                            ]
                         });
                       });
                       
