@@ -412,8 +412,8 @@
                         //email with attachment
                         window.plugin.email.open({
                             subject: 'Test',
-                            body: 'Image: ',
-                            attachment: ['icon.jpg',newValue]
+                            body: 'base64:icon.jpg'+newValue,
+                            attachments: [newValue]
                         });
                       });
                       
